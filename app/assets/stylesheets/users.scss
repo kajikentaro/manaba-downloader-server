@@ -1,0 +1,14 @@
+// Place all the styles related to the Users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+.line-login{
+    background: image-url("line_login_button/btn_login_base.png");
+    width:303px;
+    height:88px;
+    &:hover{
+        background: image-url("line_login_button/btn_login_hover.png");
+    }
+    &:active{
+        background: image-url("line_login_button/btn_login_press.png");
+    }
+}
