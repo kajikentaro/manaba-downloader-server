@@ -14,6 +14,8 @@ class UsersTest < ApplicationSystemTestCase
     visit users_url
     click_on "New User"
 
+    fill_in "Name", with: @user.name
+    fill_in "Remember digest", with: @user.remember_digest
     click_on "Create User"
 
     assert_text "User was successfully created"
@@ -24,6 +26,8 @@ class UsersTest < ApplicationSystemTestCase
     visit users_url
     click_on "Edit", match: :first
 
+    fill_in "Name", with: @user.name
+    fill_in "Remember digest", with: @user.remember_digest
     click_on "Update User"
 
     assert_text "User was successfully updated"
