@@ -9,6 +9,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.integer :expires_in
       t.string :id_token
 
+      t.string :sub
       t.timestamps
     end
   end

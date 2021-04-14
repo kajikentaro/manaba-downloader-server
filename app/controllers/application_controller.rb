@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
     URL_PREFIX = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&scope=profile%20openid"
     REDIRECT_URI = "http://localhost:3000/line_redirect";
     CLIENT_ID = 1655827877
+    CLIENT_SECRET = '3efa0bcac5640d168f741da4cc503930'
     def register
         if login?
             #登録処理
@@ -44,20 +45,29 @@ class ApplicationController < ActionController::Base
     def line_redirect
         if params[:state] == session[:state]
            #response = JSON.parse(res.body, symbolize_names: true)
-           res = JSON.parse(post_message(params[:code]).body)
+           res = JSON.parse(get_token(params[:code]).body)
            User.create(access_token: res["access_token"], expires_in: res["expires_in"], id_token: res["id_token"])
            @res =  "params: #{params[:code]} \n 保存完了"
         else
             @res = "state exception"
         end
     end
-    def post_message(code)
+    def get_token(code)
         data = {
             'grant_type' => 'authorization_code',
             'code' => code,
             'redirect_uri' => REDIRECT_URI,
-            'client_id' => '1655827877',
-            'client_secret' => '3efa0bcac5640d168f741da4cc503930'
+            'client_id' => CLIENT_ID,
+            'client_secret' => CLIENT_SECRET
+        }
+        res = Net::HTTP.post_form(URI.parse('https://api.line.me/oauth2/v2.1/token'),data)
+        return res
+    end
+
+    def get_profile(id_token)
+        data = {
+            'id_token' => id_token,
+            'client_id' => CLIENT_ID,
         }
         res = Net::HTTP.post_form(URI.parse('https://api.line.me/oauth2/v2.1/token'),data)
         return res

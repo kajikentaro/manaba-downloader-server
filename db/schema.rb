@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2021_04_13_073846) do
     t.string "access_token"
     t.integer "expires_in"
     t.string "id_token"
+    t.string "sub"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
